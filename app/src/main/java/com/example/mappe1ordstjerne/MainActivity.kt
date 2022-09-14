@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         btn5.setOnClickListener(this)
         btn6.setOnClickListener(this)
         btn7.setOnClickListener(this)
-
     }
 
 
