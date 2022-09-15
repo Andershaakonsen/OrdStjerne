@@ -1,14 +1,10 @@
 package com.example.mappe1ordstjerne
-
-import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
-import kotlin.reflect.typeOf
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -26,6 +22,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var btnDelete: Button
     private lateinit var wordList: Array<String>
     private lateinit var userWordList: MutableList<String>
+    private lateinit var tvCorrectAnswers: TextView
+    private lateinit var btnAnswers: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +44,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         wordList = resources.getStringArray(R.array.wordList)
         tvAlertText = findViewById(R.id.tvAlertText)
         userWordList = mutableListOf()
+        tvCorrectAnswers = findViewById(R.id.tvCorrectAnswers)
+        btnAnswers = findViewById(R.id.btnAnswers)
 
 
         btn1.setOnClickListener(this)
@@ -58,6 +58,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         btnCheck.setOnClickListener(this)
         btnHint.setOnClickListener(this)
         btnDelete.setOnClickListener(this)
+        btnAnswers.setOnClickListener(this)
+
     }
 
 
@@ -99,29 +101,51 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 R.id.btnCheck -> checkWord()
 
 
-                R.id.btnHint -> {
-                    giveHint()
-                }
+                R.id.btnHint -> giveHint()
 
                 R.id.btnDelete -> deleteText()
+
+                R.id.btnAnswers -> giveAnswers()
 
             }
         }
     }
 
+    private fun giveAnswers() {
+        wordList.sort()
+        tvCorrectAnswers.text =
+            capitalize(wordList.contentToString().replace("[", "").replace("]", ""))
+    }
+
     private fun giveHint() {
-        TODO("Not yet implemented")
+
+        //Finner et tilfedlig ord i ordlisten
+        val arr = wordList.toList()
+        val randomIndex = kotlin.random.Random.nextInt(arr.size)
+        val randomWord = arr[randomIndex]
+
+        //Finner en tifeldig bokstav i ordet
+        val randomLetterIndex = kotlin.random.Random.nextInt(randomWord.count())
+        val randomLetter = randomWord[randomLetterIndex]
+
+
+        val arr1 = randomWord.toCharArray()
+        arr1.forEachIndexed { index, _ ->
+            if (arr1[index] != randomLetter){
+                arr1[index] = '*'
+
+            }
+        }
+
+        tvAlertText.text = String(arr1).uppercase()
+
     }
 
     private fun checkWord() {
 
 
-        var word = edUserInput.text.toString()
-        word = word.lowercase().replace(" ", "")
+        val word = getWord()
         val keyLetter = resources.getString(R.string.btn7).lowercase()
-
-        //for testing
-        println("Inputord = ${word}")
 
 
 
@@ -132,7 +156,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         //Check for duplicate inputs
-        if (userWordList.contains(word)){
+        if (userWordList.contains(word)) {
             tvAlertText.setText(resources.getText(R.string.tvAlertAllerdyUsed))
             return
         }
@@ -152,20 +176,38 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    private fun addCorrectWord() {
-        //Koden er duplisert, spørr Sanna..
-        var word = edUserInput.text.toString()
-        word = word.lowercase().replace(" ", "")
 
+    private fun addCorrectWord() {
+
+        val word = getWord()
         deleteText()
         userWordList.add(word)
+        userWordList.sort()
+        tvCorrectAnswers.setText(
+            capitalize(
+                userWordList.toString().replace("[", "").replace("]", "")
+            )
+        )
 
-
+        //Kan prøve å få til alfabetisk sortering
     }
 
     private fun deleteText() {
         edUserInput.setText("")
         tvAlertText.setText("")
+
     }
 
+    //Capitilze first letter of a word in astring
+    private fun capitalize(str: String): String {
+        return str.trim().split("\\s+".toRegex())
+            .map { it.capitalize() }.joinToString(" ")
+    }
+
+    //Get Input Word
+    private fun getWord(): String {
+        var word = edUserInput.text.toString()
+        word = word.lowercase().replace(" ", "")
+        return word
+    }
 }
