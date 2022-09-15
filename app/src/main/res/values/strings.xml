@@ -15,7 +15,8 @@
 
     <string name="tvAlert4Ord">Ordet ditt må inneholde minst 4 bokstaver!</string>
     <string name="tvAlertWrongWord">Ordet ditt er ikke riktig, prøv igjen!</string>
-    <string name="tvAlertKeyLetter">Ordet ditt må inneholde <b>S</b></string>
+    <string name="tvAlertKeyLetter">Ordet ditt må inneholde!<b>S</b></string>
+    <string name="tvAlertAllerdyUsed">Du har allrede skrevet dette ordet!</string>
 
     <string name="btnCheck">Sjekk</string>
     <string name="btnHint">Hint</string>
