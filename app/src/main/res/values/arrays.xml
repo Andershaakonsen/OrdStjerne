@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="ordListe">
+        <item>utløst</item>
+        <item>utøs</item>
+        <item>utså</item>
+        <item>utstøtt</item>
+        <item>utstøt</item>
+        <item>utstått</item>
+        <item>utstås</item>
+        <item>utstå</item>
+        <item>usus</item>
+        <item>usunt</item>
+        <item>usunn</item>
+        <item>ustø</item>
+        <item>unnså</item>
+        <item>tust</item>
+        <item>søtt</item>
+        <item>sønn</item>
+        <item>sætt</item>
+        <item>sånt</item>
+        <item>sånn</item>
+        <item>sutt</item>
+        <item>sust</item>
+        <item>suss</item>
+        <item>sunt</item>
+        <item>sunn</item>
+        <item>støtt</item>
+        <item>støt</item>
+        <item>støs</item>
+        <item>stønt</item>
+        <item>stønn</item>
+        <item>stått</item>
+        <item>stås</item>
+        <item>stutt</item>
+        <item>stut</item>
+        <item>stust</item>
+        <item>stuss</item>
+        <item>stunt</item>
+        <item>snøt</item>
+        <item>snøst</item>
+        <item>snutt</item>
+        <item>snut</item>
+        <item>snust</item>
+        <item>snus</item>
+        <item>nøst</item>
+        <item>nuss</item>
+    </string-array>
+</resources>

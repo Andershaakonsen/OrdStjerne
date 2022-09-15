@@ -2,18 +2,24 @@
     <string name="app_name">OrdStjerne</string>
     <string name="tvHeader">Velkommen til ordstjernen!</string>
 
-    <string name="btn1">1</string>
-    <string name="btn2">2</string>
-    <string name="btn3">3</string>
-    <string name="btn4">4</string>
-    <string name="btn5">5</string>
-    <string name="btn6">6</string>
-    <string name="btn7">7</string>
+    <string name="btn1">N</string>
+    <string name="btn2">U</string>
+    <string name="btn3">Æ</string>
+    <string name="btn4">T</string>
+    <string name="btn5">Å</string>
+    <string name="btn6">Ø</string>
+    <string name="btn7">S</string>
 
     <string name="edUserInput">Skriv inn ord</string>
-    <string name="answerHeader">Riktige svar: </string>
     <string name="answersLeft">Antall svar som gjenstår:</string>
+
+    <string name="tvAlert4Ord">Ordet ditt må inneholde minst 4 bokstaver!</string>
+    <string name="tvAlertWrongWord">Ordet ditt er ikke riktig, prøv igjen!</string>
+    <string name="tvAlertKeyLetter">Ordet ditt må inneholde <b>S</b></string>
 
     <string name="btnCheck">Sjekk</string>
     <string name="btnHint">Hint</string>
+    <string name="btnDelete">Slett</string>
+
+    <string name="tvCorrectAnswerHeader">Riktige svar: </string>
 </resources>

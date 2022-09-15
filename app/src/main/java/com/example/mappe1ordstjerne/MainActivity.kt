@@ -1,10 +1,13 @@
 package com.example.mappe1ordstjerne
 
+import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -16,8 +19,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var btn6 : Button
     private lateinit var btn7 : Button
     private lateinit var edUserInput : EditText
+    private lateinit var tvAlertText: TextView
     private lateinit var btnCheck : Button
     private lateinit var btnHint : Button
+    private lateinit var ordListe : Array<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +37,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         btn6 = findViewById(R.id.btn6)
         btn7 = findViewById(R.id.btn7)
         edUserInput = findViewById(R.id.edUserInput)
-        btnCheck = findViewById(R.id.btnHint)
+        btnCheck = findViewById(R.id.btnCheck)
         btnHint = findViewById(R.id.btnHint)
+        ordListe  = resources.getStringArray(R.array.ordListe)
+        tvAlertText = findViewById(R.id.tvAlertText)
 
         btn1.setOnClickListener(this)
         btn2.setOnClickListener(this)
@@ -42,7 +49,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         btn5.setOnClickListener(this)
         btn6.setOnClickListener(this)
         btn7.setOnClickListener(this)
+        btnCheck.setOnClickListener(this)
+        btnHint.setOnClickListener(this)
     }
+
 
 
     //Setting each button
@@ -77,10 +87,65 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 R.id.btn7 -> {
                     val output : String = edUserInput.text.toString() + btn7.text.toString()
                     edUserInput.setText(output)
+                    println("btn7 clicked")
+                }
+
+                R.id.btnCheck -> checkWord()
+
+
+                R.id.btnHint -> {
+                    giveHint()
                 }
 
             }
         }
+    }
+
+    private fun giveHint() {
+        TODO("Not yet implemented")
+    }
+
+    private fun checkWord() {
+
+
+        var word = edUserInput.text.toString()
+        word = word.lowercase().replace(" ","")
+
+
+
+        val keyLetter = resources.getString(R.string.btn7).lowercase()
+
+        //for testing
+        println("Inputord = ${word}")
+
+        //Check for 4 letters
+        if (word.length < 4){
+            tvAlertText.setText(resources.getText(R.string.tvAlert4Ord))
+            return
+        }
+
+
+
+        if(word.contains(keyLetter)){
+            if (ordListe.contains(word)){
+                addCorrectWord()
+            }else{
+                tvAlertText.setText(resources.getText(R.string.tvAlertWrongWord))
+                return
+            }
+        }else{
+            tvAlertText.setText(resources.getText(R.string.tvAlertKeyLetter))
+
+        }
+
+
+
+
+
+    }
+
+    private fun addCorrectWord() {
+
     }
 
 }
