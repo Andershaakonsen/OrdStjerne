@@ -1,2 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">Word Star</string>
+    <string name="tvHeader">Welcome to the word star</string>
+
+    <string name="btn1">N</string>
+    <string name="btn2">U</string>
+    <string name="btn3">Æ</string>
+    <string name="btn4">T</string>
+    <string name="btn5">Å</string>
+    <string name="btn6">Ø</string>
+    <string name="btn7">S</string>
+
+
+    <string name="edUserInput">Enter your word</string>
+    <string name="answersLeft">Total answers left:</string>
+
+    <string name="tvAlert4Ord">Your word must contain at least 4 letters!</string>
+    <string name="tvAlertWrongWord">Your word is not correct, please try again!</string>
+    <string name="tvAlertKeyLetter">You word must contain the letter <b>S</b></string>
+    <string name="tvAlertAlreadyUsed">You have already used this word, try again!</string>
+
+    <string name="btnCheck">Check</string>
+    <string name="btnHint">Hint</string>
+    <string name="btnDelete">Delete</string>
+    <string name="btnAnswers">Answers</string>
+
+    <string name="tvCorrectAnswerHeader">Correct Answers: </string>
+</resources>

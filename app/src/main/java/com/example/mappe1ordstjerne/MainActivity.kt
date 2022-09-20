@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import java.util.ArrayList
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -21,9 +22,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var btnHint: Button
     private lateinit var btnDelete: Button
     private lateinit var wordList: Array<String>
-    private lateinit var userWordList: MutableList<String>
+    private lateinit var userWordList: java.util.ArrayList<String>
     private lateinit var tvCorrectAnswers: TextView
     private lateinit var btnAnswers: Button
+    private lateinit var tvCount : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,9 +45,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         btnDelete = findViewById(R.id.btnDelete)
         wordList = resources.getStringArray(R.array.wordList)
         tvAlertText = findViewById(R.id.tvAlertText)
-        userWordList = mutableListOf()
+        userWordList = ArrayList()
         tvCorrectAnswers = findViewById(R.id.tvCorrectAnswers)
         btnAnswers = findViewById(R.id.btnAnswers)
+        tvCount = findViewById(R.id.tvCount)
 
 
         btn1.setOnClickListener(this)
@@ -60,8 +63,32 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         btnDelete.setOnClickListener(this)
         btnAnswers.setOnClickListener(this)
 
+        updateCount()
+
+
+
+    }
+    override fun onSaveInstanceState(outState: Bundle) { // Here You have to save count value
+        super.onSaveInstanceState(outState)
+
+        outState.putString("count", tvCount.text.toString())
+        outState.putStringArrayList(
+            "wordlist",
+            userWordList
+        )
+        outState.putString("errorMessage", tvAlertText.text.toString())
+
     }
 
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) { // Here You have to restore count value
+        super.onRestoreInstanceState(savedInstanceState)
+
+        tvCount.text = savedInstanceState.getString("count")
+        userWordList = savedInstanceState.getStringArrayList("wordlist") as ArrayList<String>
+        tvCorrectAnswers.text = capitalize(userWordList.toString().replace("[", "").replace("]", ""))
+        tvAlertText.text = savedInstanceState.getString("errorMessage")
+
+    }
 
     //Setting each button´s onClickListener
     override fun onClick(view: View?) {
@@ -111,10 +138,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    //Formats the array
     private fun giveAnswers() {
-        wordList.sort()
+        userWordList = wordList.toCollection(ArrayList())
         tvCorrectAnswers.text =
-            capitalize(wordList.contentToString().replace("[", "").replace("]", ""))
+            capitalize(userWordList.toString().replace("[", "").replace("]", ""))
     }
 
     private fun giveHint() {
@@ -151,13 +179,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         //Check for 4 letters
         if (word.length < 4) {
-            tvAlertText.setText(resources.getText(R.string.tvAlert4Ord))
+            tvAlertText.text = resources.getText(R.string.tvAlert4Ord)
             return
         }
 
         //Check for duplicate inputs
         if (userWordList.contains(word)) {
-            tvAlertText.setText(resources.getText(R.string.tvAlertAllerdyUsed))
+            tvAlertText.text = resources.getText(R.string.tvAlertAlreadyUsed)
             return
         }
 
@@ -167,11 +195,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             if (wordList.contains(word)) {
                 addCorrectWord()
             } else {
-                tvAlertText.setText(resources.getText(R.string.tvAlertWrongWord))
+                tvAlertText.text = resources.getText(R.string.tvAlertWrongWord)
                 return
             }
         } else {
-            tvAlertText.setText(resources.getText(R.string.tvAlertKeyLetter))
+            tvAlertText.text = resources.getText(R.string.tvAlertKeyLetter)
         }
 
     }
@@ -189,16 +217,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             )
         )
 
-        //Kan prøve å få til alfabetisk sortering
+        updateCount()
+    }
+
+    private fun updateCount() {
+       val total = wordList.count()
+       val userWords = userWordList.count()
+        tvCount.text = "${userWords}/${total}"
     }
 
     private fun deleteText() {
         edUserInput.setText("")
-        tvAlertText.setText("")
+        tvAlertText.text = ""
 
     }
 
-    //Capitilze first letter of a word in astring
+    //Capitilzes first letter of a word in a string
     private fun capitalize(str: String): String {
         return str.trim().split("\\s+".toRegex())
             .map { it.capitalize() }.joinToString(" ")
